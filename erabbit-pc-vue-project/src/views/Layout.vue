@@ -1,7 +1,7 @@
 <template>
   <div>
     <AppTopnav />
-    <header>头部</header>
+    <AppHeader />
     <main>
       <!--二级路由-->
       <router-view></router-view>
@@ -11,9 +11,10 @@
 </template>
 <script>
 import AppTopnav from '@/components/app-topnav';
+import AppHeader from '@/components/app-header';
 export default {
   name: 'xtx-layout',
-  components: { AppTopnav },
+  components: { AppTopnav, AppHeader },
 };
 </script>
 
