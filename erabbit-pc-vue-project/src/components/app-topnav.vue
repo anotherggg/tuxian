@@ -33,7 +33,6 @@ export default {
   name: 'AppTopnav',
   setup() {
     const store = useStore();
-    console.log(store.state.user.profile);
     const profile = computed(() => {
       return store.state.user.profile;
     });
