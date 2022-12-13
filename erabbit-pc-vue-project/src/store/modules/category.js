@@ -16,17 +16,28 @@ export default {
   mutations: {
     setList(state, headCategory) {
       state.list = headCategory;
-      console.log(state, 2222);
-      console.log(headCategory);
+    },
+    // 修改当前一级分类下的open数据为true
+    show(state, item) {
+      const category = state.list.find((category) => category.id === item.id);
+      category.open = true;
+    },
+    // 修改当前一级分类下的open数据为false
+    hide(state, item) {
+      const category = state.list.find((category) => category.id === item.id);
+      category.open = false;
     },
   },
   // 需要向后台加载数据，所以需要actions函数获取数据
   actions: {
     async getList({ commit }) {
       const { result } = await findAllCategory();
+      result.forEach((item) => {
+        console.log(item);
+        item.open = false;
+      });
       // 获取数据成功，提交mutation进行数据修改
       commit('setList', result);
-      console.log(result, 123);
     },
   },
 };
