@@ -13,9 +13,15 @@
 import AppTopnav from '@/components/app-topnav';
 import AppHeader from '@/components/app-header';
 import AppFooter from '@/components/app-footer';
+import { useStore } from 'vuex';
 export default {
   name: 'xtx-layout',
   components: { AppTopnav, AppHeader, AppFooter },
+  // 获取下分类数据
+  setup() {
+    const store = useStore();
+    store.dispatch('category/getList');
+  },
 };
 </script>
 
