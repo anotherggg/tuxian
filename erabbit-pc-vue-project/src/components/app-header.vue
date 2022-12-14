@@ -3,6 +3,7 @@
     <div class="container">
       <h1 class="logo"><RouterLink to="/">小兔鲜</RouterLink></h1>
       <AppHeaderNav />
+      <AppHeaderSticky />
       <div class="search">
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="搜一搜" />
@@ -18,9 +19,10 @@
 
 <script>
 import AppHeaderNav from './app-header-nav';
+import AppHeaderSticky from './app-header-sticky';
 export default {
   name: 'AppHeader',
-  components: { AppHeaderNav },
+  components: { AppHeaderNav, AppHeaderSticky },
 };
 </script>
 <style scoped lang="less">
