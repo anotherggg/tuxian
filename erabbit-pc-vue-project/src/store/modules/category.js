@@ -33,7 +33,6 @@ export default {
     async getList({ commit }) {
       const { result } = await findAllCategory();
       result.forEach((item) => {
-        console.log(item);
         item.open = false;
       });
       // 获取数据成功，提交mutation进行数据修改
