@@ -16,6 +16,15 @@
             >{{ sub.name }}</RouterLink
           >
         </template>
+        <span v-else>
+          <xtx-skeleton
+            width="60px"
+            height="18px"
+            style="margin-right: 5px"
+            bg="rgba(255,255,255,0.2)"
+          />
+          <xtx-skeleton width="50px" height="18px" bg="rgba(255,255,255,0.2)" />
+        </span>
       </li>
     </ul>
     <!-- 弹层 -->
@@ -62,7 +71,9 @@
 import { useStore } from 'vuex';
 import { reactive, computed, ref } from 'vue';
 import { findBrand } from '@/api/home.js';
+import xtxSkeleton from '../../../components/library/xtx-skeleton.vue';
 export default {
+  components: { xtxSkeleton },
   name: 'HomeCategory',
   setup() {
     const brand = reactive({
@@ -215,6 +226,17 @@ li.brand {
         color: #999;
       }
     }
+  }
+}
+.xtx-skeleton {
+  animation: fade 1s linear infinite alternate;
+}
+@keyframes fade {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
   }
 }
 </style>
