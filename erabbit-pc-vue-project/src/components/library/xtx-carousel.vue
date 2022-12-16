@@ -1,8 +1,8 @@
 <template>
-  <div class="xtx-carousel">
+  <div class="xtx-carousel" @mouseenter="stop()" @mouseleave="start()">
     <ul class="carousel-body">
       <li
-        class="carousel-item fade"
+        class="carousel-item"
         v-for="(item, i) in sliders"
         :key="i"
         :class="{ fade: index === i }"
@@ -12,10 +12,10 @@
         </RouterLink>
       </li>
     </ul>
-    <a href="javascript:;" class="carousel-btn prev"
+    <a href="javascript:;" class="carousel-btn prev" @click="toggle(-1)"
       ><i class="iconfont icon-angle-left"></i
     ></a>
-    <a href="javascript:;" class="carousel-btn next"
+    <a href="javascript:;" class="carousel-btn next" @click="toggle(1)"
       ><i class="iconfont icon-angle-right"></i
     ></a>
     <div class="carousel-indicator">
@@ -23,13 +23,14 @@
         v-for="(item, i) in sliders"
         :key="i"
         :class="{ active: index === i }"
+        @click="skippic(i)"
       ></span>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 export default {
   name: 'XtxCarousel',
   props: {
@@ -37,11 +38,68 @@ export default {
       type: Array,
       default: () => [],
     },
+    autoPlay: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup() {
+  setup(props) {
     // 默认显示图片的索引
     const index = ref(0);
-    return { index };
+    // 自动播放
+    let timer = null;
+    const autoPlayFn = () => {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        index.value++;
+        console.log(11);
+        if (index.value >= props.sliders.length) {
+          index.value = 0;
+        }
+      }, 3000);
+    };
+    watch(
+      () => props.sliders,
+      (newVal) => {
+        // 有数据才开启自动播放，才调用自动播放函数
+        if (newVal.length && props.autoPlay) {
+          index.value = 0;
+          autoPlayFn();
+        }
+      },
+      { immediate: true }
+    );
+    // 鼠标进入停止，移出开启自动滚动，前提条件：autoPlay:true
+    const stop = () => {
+      if (timer) clearInterval(timer);
+    };
+    const start = () => {
+      if (props.sliders.length && props.autoPlay) {
+        autoPlayFn();
+      }
+    };
+    // 上一张下一张
+    const toggle = (step) => {
+      const newIndex = index.value + step;
+      if (newIndex >= props.sliders.length) {
+        index.value = 0;
+        return;
+      }
+      if (newIndex < 0) {
+        index.value = props.sliders.length - 1;
+        return;
+      }
+      index.value = newIndex;
+    };
+
+    // 点击小圆点确定跳转到哪张图片
+    const skippic = (i) => {
+      if (i >= 0 && i <= props.sliders.length) {
+        index.value = i;
+      }
+    };
+
+    return { index, stop, start, toggle, skippic };
   },
 };
 </script>
@@ -107,7 +165,7 @@ export default {
       z-index: 2;
       text-align: center;
       line-height: 44px;
-      opacity: 0;
+      opacity: 1;
       transition: all 0.5s;
       &.prev {
         left: 20px;
