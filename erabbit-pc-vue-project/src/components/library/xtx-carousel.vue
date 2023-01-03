@@ -52,7 +52,6 @@ export default {
       clearInterval(timer);
       timer = setInterval(() => {
         index.value++;
-        console.log(11);
         if (index.value >= props.sliders.length) {
           index.value = 0;
         }
