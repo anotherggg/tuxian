@@ -5,6 +5,7 @@
 import XtxSkeleton from './xtx-skeleton.vue';
 import XtxCarousel from './xtx-carousel.vue';
 import XtxMore from './xtx-more.vue';
+import defaultImg from '@/assets/images/200.png';
 
 export default {
   install(app) {
@@ -13,5 +14,37 @@ export default {
     app.component(XtxSkeleton.name, XtxSkeleton);
     app.component(XtxCarousel.name, XtxCarousel);
     app.component(XtxMore.name, XtxMore);
+    defineDirective(app);
   },
+};
+
+// 指令
+const defineDirective = (app) => {
+  // 图片懒加载指令
+  // 设置全局指令
+  app.directive('lazyload', {
+    mounted(el, binding) {
+      // el为dom对象
+      // binding为自定义指令的值
+      const observer = new IntersectionObserver(
+        ([{ isIntersecting }]) => {
+          if (isIntersecting) {
+            // 停止监听
+            observer.unobserve(el);
+            el.onerror = () => {
+              // 设置dom元素src的参数
+              el.src = defaultImg;
+            };
+            el.src = binding.value;
+          }
+        },
+        {
+          // 交叉，懒加载的图片显示多少开始加载
+          threshold: 0.01,
+        }
+      );
+      // 开始监听
+      observer.observe(el);
+    },
+  });
 };
