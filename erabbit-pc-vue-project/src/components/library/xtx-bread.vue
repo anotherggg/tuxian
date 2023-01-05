@@ -41,6 +41,7 @@ export default {
         dymanicItems.push(h('i', { class: 'iconfont icon-angle-right' }));
       }
     });
+    // h('标签'，{属性}, 子标签)
     return h('div', { class: 'xtx-bread' }, dymanicItems);
   },
 };
