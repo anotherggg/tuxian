@@ -5,9 +5,9 @@ git commit -m "实现了登录功能"
 git push -u origin login
 将本地的 login 分支合并到本地的 master 主分支，并推送 master 分支到 Gitee 仓库：
 git checkout master
-git merge login
+git merge login(需要合并的分支)
 git push
 删除本地的 login 子分支：
-git branch -d login
+git branch -D login
 基于 master 主分支，新建 home 分支，准备开发主页布局相关的功能：
 git checkout -b home

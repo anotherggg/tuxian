@@ -5,6 +5,7 @@
 import XtxSkeleton from './xtx-skeleton.vue';
 import XtxCarousel from './xtx-carousel.vue';
 import XtxMore from './xtx-more.vue';
+import XtxBread from './xtx-bread.vue';
 import defaultImg from '@/assets/images/200.png';
 
 export default {
@@ -14,6 +15,7 @@ export default {
     app.component(XtxSkeleton.name, XtxSkeleton);
     app.component(XtxCarousel.name, XtxCarousel);
     app.component(XtxMore.name, XtxMore);
+    app.component(XtxBread.name, XtxBread);
     defineDirective(app);
   },
 };
