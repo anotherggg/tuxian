@@ -1,19 +1,6 @@
 <template>
   <div class="xtx-bread">
-    <div class="xtx-bread-item">
-      <RouterLink to="/">首页</RouterLink>
-    </div>
-    <i class="iconfont icon-angle-right"></i>
-    <div class="xtx-bread-item" v-if="parentName">
-      <RouterLink v-if="parentPath" :to="parentPath">{{
-        parentName
-      }}</RouterLink>
-      <span v-else>{{ parentName }}</span>
-    </div>
-    <i v-if="parentName" class="iconfont icon-angle-right"></i>
-    <div class="xtx-bread-item">
-      <span><slot /></span>
-    </div>
+    <slot />
   </div>
 </template>
 
