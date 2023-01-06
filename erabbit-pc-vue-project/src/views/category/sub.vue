@@ -1,10 +1,17 @@
 <template>
-  <p>这里是Sub-Category页面</p>
+  <div class="sub-category">
+    <div class="container">
+      <!-- 面包屑 -->
+      <SubBread />
+    </div>
+  </div>
 </template>
 
 <script>
+import SubBread from './components/sub-bread';
 export default {
   name: 'SubCategory',
+  components: { SubBread },
 };
 </script>
 <style scoped lang="less"></style>
