@@ -24,8 +24,10 @@ export default {
     },
     // 修改当前一级分类下的open数据为false
     hide(state, item) {
-      const category = state.list.find((category) => category.id === item.id);
-      category.open = false;
+      if (state && item) {
+        const category = state.list.find((category) => category.id === item.id);
+        category.open = false;
+      }
     },
   },
   // 需要向后台加载数据，所以需要actions函数获取数据
