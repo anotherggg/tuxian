@@ -1,6 +1,6 @@
 <template>
   <div class="xtx-infinite-loading" ref="container">
-    <div class="loading" v-if="finished === false">
+    <div class="loading" v-if="loading">
       <span class="img"></span>
       <span class="text">正在加载...</span>
     </div>
@@ -27,13 +27,10 @@ export default {
     },
   },
   setup(props, { emit }) {
-    console.log(111111111111);
     const container = ref(null);
     useIntersectionObserver(
       container,
       ([{ isIntersecting }], dom) => {
-        console.log(props.loading, 'props.loading');
-        console.log(props.finished, 'props.finished');
         if (isIntersecting) {
           if (props.loading === false && props.finished === false) {
             emit('infinite');
