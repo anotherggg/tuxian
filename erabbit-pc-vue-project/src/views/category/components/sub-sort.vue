@@ -46,8 +46,10 @@
       </a>
     </div>
     <div class="check">
-      <XtxCheckbox v-model="sortParams.inventory">仅显示有货商品</XtxCheckbox>
-      <XtxCheckbox v-model="sortParams.onlyDiscount"
+      <XtxCheckbox @change="changeCheck" v-model="sortParams.inventory"
+        >仅显示有货商品</XtxCheckbox
+      >
+      <XtxCheckbox @change="changeCheck" v-model="sortParams.onlyDiscount"
         >仅显示特惠商品</XtxCheckbox
       >
     </div>
@@ -57,7 +59,7 @@
 import { reactive } from 'vue';
 export default {
   name: 'SubSort',
-  setup() {
+  setup(props, { emit }) {
     // 1. 根据后台需要的参数定义数据对象
     // 2. 根据数据对象，绑定组件（复选框，排序按钮）
     // 3. 在操作排序组件的时候，需要反馈给数据对象
@@ -77,20 +79,26 @@ export default {
         if (sortParams.sortMethod === null) {
           // 第一次点击，默认是降序
           sortParams.sortMethod = 'desc';
+          emit('sort-change', sortParams);
         } else {
           // 其他情况根据当前排序取反
           sortParams.sortMethod =
             sortParams.sortMethod === 'desc' ? 'asc' : 'desc';
+          emit('sort-change', sortParams);
         }
       } else {
         // 如果排序未改变停止逻辑
         if (sortParams.sortField === sortField) return;
         sortParams.sortField = sortField;
         sortParams.sortMethod = null;
+        emit('sort-change', sortParams);
       }
     };
+    const changeCheck = (sortField) => {
+      emit('sort-change', sortParams);
+    };
 
-    return { sortParams, changeSort };
+    return { sortParams, changeSort, changeCheck };
   },
 };
 </script>

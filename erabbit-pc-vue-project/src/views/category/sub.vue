@@ -4,11 +4,11 @@
       <!-- 面包屑 -->
       <SubBread />
       <!-- 筛选区 -->
-      <SubFilter />
+      <SubFilter @filter-change="changeFilter" />
       <!-- 结果区域 -->
       <div class="goods-list">
         <!-- 排序 -->
-        <SubSort />
+        <SubSort @sort-change="changeSort" />
         <!-- 列表 -->
         <ul>
           <li v-for="item in goodsList" :key="item.id">
@@ -68,6 +68,20 @@ export default {
         loading.value = false;
       });
     };
+    // 监听筛选区改变
+    const changeFilter = (filterParams) => {
+      reqParams = { ...reqParams, ...filterParams };
+      reqParams.page = 1;
+      goodsList.value = [];
+      finished.value = false;
+    };
+    // 监听排序改变
+    const changeSort = (sortParams) => {
+      reqParams = { ...reqParams, ...sortParams };
+      reqParams.page = 1;
+      goodsList.value = [];
+      finished.value = false;
+    };
 
     // 切换二级分类重新加载
     watch(
@@ -84,11 +98,14 @@ export default {
       }
     );
 
-    return { loading, finished, goodsList, getData };
+    return { loading, finished, goodsList, getData, changeFilter, changeSort };
   },
 };
 </script>
 <style scoped lang="less">
+.xtx-skeleton {
+  padding: 10px 0;
+}
 .goods-list {
   background: #fff;
   padding: 0 25px;
